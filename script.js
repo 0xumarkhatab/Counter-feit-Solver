@@ -3,9 +3,18 @@ document.write("Hello World");
 //  Make Secen Nodes
 
 // Medicines/Shoes/Perfumes are products
+function cypherText(name) {
+  let cyphered = "";
+  for (x of name) {
+    cyphered += x + "$";
+  }
+  console.log("cyphered", cyphered);
+  return cyphered;
+}
 
 function encode(name, price, date, serialNumber) {
-  const content = name + "_" + price + "_" + date + "_" + serialNumber;
+  const content =
+    cypherText(name) + "_" + price + "_" + date + "_" + serialNumber;
   const element = {
     hashed: content,
     type: "endcoded",
