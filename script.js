@@ -1,4 +1,6 @@
-document.write("Hello World");
+document.write(
+  "<h1>CounterFeit Problem Solution</h1> <p>using Blockchain Ethics and power of Javascript</p>"
+);
 
 //  Make Secen Nodes
 
@@ -50,6 +52,22 @@ function extractInfo(p) {
   return obj;
 }
 
+//__________________Intuition of comparison of objects/products
+// We are testing the priorness of a product
+// by it's date stamp
+// the date is converted into javascript epoche
+//
+
+//  ___________ Functioning____________
+
+// if h1 is greater -> return 1
+// if h1 is lesser -> return -1
+// if both are equal -> return 0
+
+// 0 means equal(manufactured at same time)
+// 1 means first is greater(product is made after)
+// -1 means first is lesser(product is made first)
+
 function hashEquality(h1, h2) {
   if (extractInfo(h1).date === extractInfo(h2).date) {
     return 0;
@@ -97,7 +115,7 @@ const perfume2 = new product("Blue", 23);
 console.log(perfume1);
 console.log(perfume2);
 console.log(
-  "\t\tTesting Fungibility\n0 means equal\n1 means first is greater(product is made after)\n-1 means first is lesser(product is made first)\n\n\n"
+  "\t\tTesting Fungibility\n0 means equal\n1 means first is greater(first product is made after)\n-1 means first is lesser(first product is made first)\n\n\n"
 );
 
 console.log("Testing Fungibility for same products");
