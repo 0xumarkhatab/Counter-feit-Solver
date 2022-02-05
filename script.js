@@ -178,30 +178,14 @@ class person {
       if (Pool[i].acceptTransaction(tran) === true) {
         console.log("\nTransaction Accepted\n");
         // delete from sender and credit to destination here
+
         break;
       }
     }
   }
-  takeOwnerShip(tran) {
-    this.products.push(tran.data);
-    console.log(
-      "\nAfter Addition of the Item, Person ",
-      this.publicKey,
-      " has Following Items\n"
-    );
 
-    this.printProducts();
-
-    return true;
-  }
   getItem(index) {
     return this.products[index];
-  }
-  removeItem(item) {
-    let id = item.serialNumber;
-    this.products = this.products.filter(
-      (theItem) => theItem.serialNumber != id
-    );
   }
 
   //attempting to accept transaction
