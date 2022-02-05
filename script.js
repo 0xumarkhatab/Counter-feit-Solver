@@ -146,6 +146,6 @@ function MakePool() {
 MakePool();
 Pool[3].askPermission();
 
-// function addProductToPerson(prd, prsn) {
-//   Pool[prsn.getId()].addProduct(prd);
-// }
+function addProductToPerson(prd, prsn) {
+  Pool[prsn.getId()].addProduct(prd);
+}
