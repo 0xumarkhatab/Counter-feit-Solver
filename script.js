@@ -193,6 +193,12 @@ class person {
 
     return true;
   }
+  removeItem(item) {
+    let id = item.serialNumber;
+    this.products = this.products.filter(
+      (theItem) => theItem.serialNumber != id
+    );
+  }
 
   getItem(index) {
     return this.products[index];
