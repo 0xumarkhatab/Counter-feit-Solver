@@ -3,7 +3,13 @@ document.write(
 );
 
 //  Make Secen Nodes
+//__________________Random function ________
 
+function generateRandInt(prec) {
+  return parseInt(Math.random() * prec);
+}
+
+//___________________________________
 // Medicines/Shoes/Perfumes are products
 function cypherText(name) {
   let cyphered = "";
@@ -18,10 +24,11 @@ function cypherText(name) {
 
 function extractInfo(p) {
   let arr = Array.from(p.hash.hashed);
+  console.log("product hash is ", p.hash.hashed);
   let name = "",
     price = "",
     serialNumber = "",
-    date = "";
+    mfgTime = "";
   let i = 0;
   for (i; arr[i] != "_"; i++) {
     if (arr[i] != "$") name += arr[i];
@@ -33,20 +40,22 @@ function extractInfo(p) {
 
   i++;
   for (i; arr[i] != "_"; i++) {
-    serialNumber += arr[i];
+    mfgTime += arr[i];
   }
   i++;
   for (i; i < arr.length; i++) {
-    date += arr[i];
+    serialNumber += arr[i];
   }
 
   price = Number(price);
-  date = Number(date);
+
+  mfgTime = Number(mfgTime);
+
   const obj = {
     name: name,
     price: price,
     serialNumber: serialNumber,
-    date: date,
+    mfgTime: mfgTime,
   };
 
   return obj;
@@ -54,8 +63,8 @@ function extractInfo(p) {
 
 //__________________Intuition of comparison of objects/products
 // We are testing the priorness of a product
-// by it's date stamp
-// the date is converted into javascript epoche
+// by it's mfgTimestamp
+// the mfgTimeis converted into javascript epoche
 //
 
 //  ___________ Functioning____________
@@ -69,20 +78,20 @@ function extractInfo(p) {
 // -1 means first is lesser(product is made first)
 
 function hashEquality(h1, h2) {
-  if (extractInfo(h1).date === extractInfo(h2).date) {
+  if (extractInfo(h1).mfgTime === extractInfo(h2).date) {
     return 0;
-  } else if (extractInfo(h1).date > extractInfo(h2).date) {
+  } else if (extractInfo(h1).mfgTime > extractInfo(h2).date) {
     return 1;
-  } else if (extractInfo(h1).date < extractInfo(h2).date) {
+  } else if (extractInfo(h1).mfgTime < extractInfo(h2).date) {
     return -1;
   }
 }
 
 //_________________________________________//
 
-function encode(name, price, date, serialNumber) {
+function encode(name, price, mfgTime, serialNumber) {
   const content =
-    cypherText(name) + "_" + price + "_" + date + "_" + serialNumber;
+    cypherText(name) + "_" + price + "_" + mfgTime + "_" + serialNumber;
   const element = {
     hashed: content,
     type: "endcoded",
@@ -93,33 +102,27 @@ function encode(name, price, date, serialNumber) {
 function decode(name, date, serialNumber) {}
 
 function generateSerialNumber() {
-  return parseInt(Math.random() * 100000);
+  return generateRandInt(10000);
 }
 
 class product {
   constructor(name, price) {
     this.name = name;
     this.price = price;
-    this.hash = encode(this.name, this.price, this.date, this.serialNumber);
+    this.serialNumber = generateSerialNumber();
+    this.mfgTime = Number(new Date());
+
+    this.hash = encode(this.name, this.price, this.mfgTime, this.serialNumber);
   }
   isEqual(theProduct) {
     return 1;
   }
 }
 
-const perfume1 = new product("Blue", 23);
-const perfume2 = new product("Blue", 23);
-
-console.log(perfume1);
-console.log(perfume2);
-console.log(
-  "\t\tTesting Fungibility\n0 means equal\n1 means first is greater(first product is made after)\n-1 means first is lesser(first product is made first)\n\n\n"
-);
-
 class person {
   constructor(id) {
     this.publicKey = id;
-    this.privateKey = parseInt(Math.random() * 1000);
+    this.privateKey = generateRandInt(1000);
 
     this.products = [];
   }
@@ -142,7 +145,7 @@ class person {
     console.log(
       "Person ",
       this.publicKey,
-      "asking for permision to add product"
+      "asking for permision to add product\n\n"
     );
 
     let permision = true;
@@ -172,6 +175,7 @@ class person {
     return this.publicKey;
   }
 }
+
 let Pool = [];
 
 function MakePool() {
@@ -183,13 +187,43 @@ function MakePool() {
 MakePool();
 
 function addProductToPerson(prd, prsn) {
-  console.log("Person ", prsn.getPublicKey(), "wants to add product\n");
+  console.log(
+    "\n\t\t_________________________________________\n\nPerson ",
+    prsn.getPublicKey(),
+    "wants to add product\n"
+  );
 
   if (Pool[prsn.getPublicKey()].addProduct(prd) === true) {
     console.log("Product Added");
+    console.log("\n\t\t___________________________________________\n");
+
     return true;
   }
+  console.log("\n\t\t___________________________________________\n");
+
   return false;
 }
 
-addProductToPerson(perfume1, Pool[2]);
+let producNames = [
+  "Blue Perfume",
+  "Iphone",
+  "Lenovo Laptop",
+  "Samsumg Galaxy",
+  "Panadol Tablets",
+  "Omeprazole Tablet",
+  "Product X",
+  "Rolex Watch",
+  "Kobe's Sign",
+  "Infinix Smartphone",
+];
+
+for (let i = 0; i < Pool.length; i++) {
+  let p_name = producNames[generateRandInt(10)];
+  let p1 = new product(p_name, generateRandInt(100));
+  addProductToPerson(p1, Pool[i]);
+}
+
+for (let i = 0; i < Pool.length; i++) {
+  const element = Pool[i];
+  element.printProducts();
+}
