@@ -1,0 +1,12 @@
+.products {
+  display: flex;
+  border-bottom: 1px solid grey;
+}
+.products__left {
+  flex: 0.5;
+  border-right: 1px solid rgb(0, 0, 0);
+  padding: 10px;
+}
+.products__right {
+  flex: 0.5;
+}

@@ -1,0 +1,13 @@
+.navbarItem {
+  font-size: 30px;
+  padding: 8px;
+  color: white;
+}
+.hover:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+.hover:active {
+  cursor: default;
+  text-decoration: none;
+}
