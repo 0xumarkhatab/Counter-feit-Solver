@@ -1,6 +1,8 @@
-//________________________________Web Layout______________________________//
+document.write(
+  "<h1>CounterFeit Problem Solution</h1> <p>using Blockchain Ethics and power of Javascript</p>"
+);
 
-//________________________________________________________________//
+//  Make Secen Nodes
 //__________________Random function ________
 
 function generateRandInt(prec) {
@@ -14,7 +16,6 @@ function cypherText(name) {
   for (x of name) {
     cyphered += x + "$";
   }
-  console.log("cyphered", cyphered);
   return cyphered;
 }
 
@@ -22,7 +23,6 @@ function cypherText(name) {
 
 function extractInfo(p) {
   let arr = Array.from(p.hash.hashed);
-  console.log("product hash is ", p.hash.hashed);
   let name = "",
     price = "",
     serialNumber = "",
@@ -115,15 +115,13 @@ class product {
   isEqual(theProduct) {
     return 1;
   }
-  getHash() {
-    return this.hash;
-  }
 }
+let TransactionLedger = [];
 
 class person {
-  constructor(publicId, privateKey) {
-    this.publicKey = publicId;
-    this.privateKey = privateKey;
+  constructor(id) {
+    this.publicKey = id;
+    this.privateKey = generateRandInt(1000);
 
     this.products = [];
   }
@@ -142,9 +140,6 @@ class person {
     }
   }
 
-  sendProduct(prd, privateKey) {
-    const hash = prd.getHash();
-  }
   askPermission(prsn) {
     console.log(
       "Person ",
@@ -178,13 +173,50 @@ class person {
   getPublicKey() {
     return this.publicKey;
   }
+  broadcastTransaction(tran) {
+    for (let i = 0; i < Pool.length; i++) {
+      if (Pool[i].acceptTransaction(tran) === true) {
+        console.log("\nTransaction Accepted\n");
+
+        // delete from sender and credit to destination here
+        // Add to Transaction Distributed Ledger
+
+        break;
+      }
+    }
+  }
+
+  getItem(index) {
+    return this.products[index];
+  }
+  //attempting to accept transaction
+
+  acceptTransaction(tran) {
+    if (tran.destinationKey === this.publicKey) {
+      console.log("Accepting Transaction");
+      return true;
+    }
+    return false;
+  }
+  sendItem(itemNo, dest_key) {
+    let data = this.getItem(itemNo);
+    let destinationKey = dest_key;
+    let sender = this.publicKey;
+    let transaction = {
+      data,
+      destinationKey,
+      sender,
+    };
+
+    this.broadcastTransaction(transaction);
+  }
 }
 
 let Pool = [];
 
 function MakePool() {
   for (let i = 0; i <= 7; i++) {
-    Pool.push(new person(i), "XDprivate" + i);
+    Pool.push(new person(i));
   }
 }
 
@@ -227,11 +259,16 @@ for (let i = 0; i < Pool.length; i++) {
   addProductToPerson(p1, Pool[i]);
 }
 
+console.log("Printng Products");
+
 for (let i = 0; i < Pool.length; i++) {
   const element = Pool[i];
   element.printProducts();
 }
 
-// send product
-// accept or reject
-// broadcast product
+Pool[0].sendItem(0, 1);
+console.log(
+  "\nAfter person 0 has transferred.... \tNow Person 1 has following products"
+);
+
+Pool[1].printProducts();
