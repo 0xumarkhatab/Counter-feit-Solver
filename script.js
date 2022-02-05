@@ -22,6 +22,8 @@ function encode(name, price, date, serialNumber) {
   return element;
 }
 
+function decode(name, date, serialNumber) {}
+
 function generateSerialNumber() {
   return parseInt(Math.random() * 100000);
 }
