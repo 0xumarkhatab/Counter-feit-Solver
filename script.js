@@ -97,8 +97,6 @@ function encode(name, price, mfgTime, serialNumber) {
   return element;
 }
 
-function decode(name, date, serialNumber) {}
-
 function generateSerialNumber() {
   return generateRandInt(10000);
 }
