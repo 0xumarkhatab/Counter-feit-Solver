@@ -100,8 +100,6 @@ class product {
   constructor(name, price) {
     this.name = name;
     this.price = price;
-    this.date = Number(new Date());
-    this.serialNumber = generateSerialNumber();
     this.hash = encode(this.name, this.price, this.date, this.serialNumber);
   }
   isEqual(theProduct) {
@@ -120,7 +118,9 @@ console.log(
 
 class person {
   constructor(id) {
-    this.id = id;
+    this.publicKey = id;
+    this.privateKey = parseInt(Math.random() * 1000);
+
     this.products = [];
   }
   addProduct(prd) {
@@ -139,12 +139,16 @@ class person {
   }
 
   askPermission(prsn) {
-    console.log("Person ", this.id, "asking for permision to add product");
+    console.log(
+      "Person ",
+      this.publicKey,
+      "asking for permision to add product"
+    );
 
     let permision = true;
 
     for (let i = 0; i < Pool.length; i++) {
-      if (this.id === i) {
+      if (this.publicKey === i) {
         continue;
       }
       if (Pool[i].givePermission(prsn) === false) {
@@ -157,11 +161,15 @@ class person {
     return permision;
   }
   givePermission(prsn) {
-    console.log("Person ", this.id, "is considering permision to add product");
+    console.log(
+      "Person ",
+      this.publicKey,
+      "is considering permision to add product"
+    );
     return true;
   }
-  getId() {
-    return this.id;
+  getPublicKey() {
+    return this.publicKey;
   }
 }
 let Pool = [];
@@ -175,9 +183,9 @@ function MakePool() {
 MakePool();
 
 function addProductToPerson(prd, prsn) {
-  console.log("Person ", prsn.getId(), "wants to add product\n");
+  console.log("Person ", prsn.getPublicKey(), "wants to add product\n");
 
-  if (Pool[prsn.getId()].addProduct(prd) === true) {
+  if (Pool[prsn.getPublicKey()].addProduct(prd) === true) {
     console.log("Product Added");
     return true;
   }
@@ -185,5 +193,3 @@ function addProductToPerson(prd, prsn) {
 }
 
 addProductToPerson(perfume1, Pool[2]);
-
-// Pool[2].printProducts();
