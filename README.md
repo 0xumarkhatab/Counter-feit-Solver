@@ -1,3 +1,12 @@
+###### Preview of Final Project
+
+![image1](./illustration1.JPG)
+![image2](./image2.JPG)
+![image3](./illustration3.JPG)
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
