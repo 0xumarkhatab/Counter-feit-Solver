@@ -86,10 +86,8 @@ class product {
   }
 }
 
-const perfume = new product("Blue", 23);
+const perfume1 = new product("Blue", 23);
+const perfume2 = new product("Blue", 23);
 
-console.log(perfume);
-
-console.log("Extracting Information");
-
-console.log(extractInfo(perfume));
+console.log(perfume1);
+console.log(perfume2);
