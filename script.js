@@ -1,8 +1,6 @@
-document.write(
-  "<h1>CounterFeit Problem Solution</h1> <p>using Blockchain Ethics and power of Javascript</p>"
-);
+//________________________________Web Layout______________________________//
 
-//  Make Secen Nodes
+//________________________________________________________________//
 //__________________Random function ________
 
 function generateRandInt(prec) {
@@ -117,12 +115,15 @@ class product {
   isEqual(theProduct) {
     return 1;
   }
+  getHash() {
+    return this.hash;
+  }
 }
 
 class person {
-  constructor(id) {
-    this.publicKey = id;
-    this.privateKey = generateRandInt(1000);
+  constructor(publicId, privateKey) {
+    this.publicKey = publicId;
+    this.privateKey = privateKey;
 
     this.products = [];
   }
@@ -141,6 +142,9 @@ class person {
     }
   }
 
+  sendProduct(prd, privateKey) {
+    const hash = prd.getHash();
+  }
   askPermission(prsn) {
     console.log(
       "Person ",
@@ -180,7 +184,7 @@ let Pool = [];
 
 function MakePool() {
   for (let i = 0; i <= 7; i++) {
-    Pool.push(new person(i));
+    Pool.push(new person(i), "XDprivate" + i);
   }
 }
 
@@ -227,3 +231,7 @@ for (let i = 0; i < Pool.length; i++) {
   const element = Pool[i];
   element.printProducts();
 }
+
+// send product
+// accept or reject
+// broadcast product
