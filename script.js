@@ -175,7 +175,12 @@ class person {
     for (let i = 0; i < Pool.length; i++) {
       if (Pool[i].acceptTransaction(tran) === true) {
         console.log("\nTransaction Accepted\n");
+        //      taking owner ship
+        Pool[i].takeOwnerShip(tran);
         // delete from sender and credit to destination here
+        this.removeItem(tran.data);
+
+        TransactionLedger.push(tran);
 
         break;
       }
