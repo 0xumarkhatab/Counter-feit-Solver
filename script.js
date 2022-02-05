@@ -116,6 +116,27 @@ class product {
 }
 let TransactionLedger = [];
 
+function viewTransactionHistory() {
+  console.log(
+    "\n\t\t_______Transaction History_________\n(Pulling Data From Distributed Transaction Ledger)\n"
+  );
+  for (let i = 0; i < TransactionLedger.length; i++) {
+    const element = TransactionLedger[i];
+    console.log("-------Transaction No: ", element.transactionID, "\n");
+
+    console.log(
+      "Sender : ",
+      element.sender,
+      " \t Destination:",
+      element.destinationKey,
+      " Data : (hidden) ",
+      " Transaction time : ",
+      element.transactionTime
+    );
+  }
+  console.log("\n__________Transaction List Ended________________\n");
+}
+
 class person {
   constructor(id) {
     this.publicKey = id;
@@ -181,6 +202,7 @@ class person {
         this.removeItem(tran.data);
 
         TransactionLedger.push(tran);
+        viewTransactionHistory();
 
         break;
       }
