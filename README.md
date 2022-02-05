@@ -1,2 +1,3 @@
 # StacksHack4Impact
-A repo for Clarity smart contract hackathon
+A repo for General Blockchain  hackathon
+known as Stacks Hack4Impact
