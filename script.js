@@ -121,15 +121,43 @@ console.log(
 class person {
   constructor(id) {
     this.id = id;
+    this.products = [];
   }
   addProduct(prd) {
-    this.products.push(prd);
+    console.log("->", this.askPermission(this));
+
+    if (this.askPermission(this)) {
+      this.products.push(prd);
+      return true;
+    } else {
+      console.log("Permission denied");
+      return false;
+    }
   }
-  askPermission() {
+  printProducts() {
+    for (x of this.products) {
+      console.log(extractInfo(x));
+    }
+  }
+
+  askPermission(prsn) {
     console.log("Person ", this.id, "asking for permision to add product");
+
+    let permision = true;
+
+    for (let i = 0; i < Pool.length; i++) {
+      if (Pool[i].givePermission(prsn) === false) {
+        permision = false; //if even one of the participants did not allow
+        // the transaction will not take place
+        console.log("person ", i, "denied");
+      } else console.log("person ", i, "agreed");
+    }
+
+    return permision;
   }
-  givePermission() {
-    console.log("Person ", this.id, "giving permision to add product");
+  givePermission(prsn) {
+    console.log("Person ", this.id, "is considering permision to add product");
+    return true;
   }
   getId() {
     return this.id;
@@ -138,14 +166,23 @@ class person {
 let Pool = [];
 
 function MakePool() {
-  for (let i = 1; i <= 7; i++) {
+  for (let i = 0; i <= 7; i++) {
     Pool.push(new person(i));
   }
 }
 
 MakePool();
-Pool[3].askPermission();
 
 function addProductToPerson(prd, prsn) {
-  Pool[prsn.getId()].addProduct(prd);
+  console.log("asking to add product in global function");
+
+  if (Pool[prsn.getId()].addProduct(prd) === true) {
+    console.log("Product Added");
+    return true;
+  }
+  return false;
 }
+
+addProductToPerson(perfume1, Pool[2]);
+
+// Pool[2].printProducts();
