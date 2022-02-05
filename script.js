@@ -215,6 +215,14 @@ class person {
   }
   sendItem(itemNo, dest_key) {
     let data = this.getItem(itemNo);
+    if (data === undefined) {
+      console.log(
+        "\n\t\t-->>>Dangg !!Person ",
+        this.publicKey,
+        " does not have the item to transfer\n"
+      );
+      return false;
+    }
 
     let destinationKey = dest_key;
     let sender = this.publicKey;
