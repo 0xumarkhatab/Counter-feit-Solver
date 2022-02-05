@@ -124,8 +124,6 @@ class person {
     this.products = [];
   }
   addProduct(prd) {
-    console.log("->", this.askPermission(this));
-
     if (this.askPermission(this)) {
       this.products.push(prd);
       return true;
@@ -146,6 +144,9 @@ class person {
     let permision = true;
 
     for (let i = 0; i < Pool.length; i++) {
+      if (this.id === i) {
+        continue;
+      }
       if (Pool[i].givePermission(prsn) === false) {
         permision = false; //if even one of the participants did not allow
         // the transaction will not take place
@@ -174,7 +175,7 @@ function MakePool() {
 MakePool();
 
 function addProductToPerson(prd, prsn) {
-  console.log("asking to add product in global function");
+  console.log("Person ", prsn.getId(), "wants to add product\n");
 
   if (Pool[prsn.getId()].addProduct(prd) === true) {
     console.log("Product Added");
