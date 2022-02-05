@@ -14,16 +14,40 @@ function cypherText(name) {
 
 //______________________Hashing Functions_____//
 
-function extractPrice(p) {
+function extractInfo(p) {
   let arr = Array.from(p.hash.hashed);
-  let price = "";
+  let name = "",
+    price = "",
+    serialNumber = "",
+    date = "";
   let i = 0;
-  for (i; arr[i] != "_"; i++) {}
+  for (i; arr[i] != "_"; i++) {
+    if (arr[i] != "$") name += arr[i];
+  }
   i++;
   for (i; arr[i] != "_"; i++) {
     price += arr[i];
   }
-  console.log(Number(price));
+
+  i++;
+  for (i; arr[i] != "_"; i++) {
+    serialNumber += arr[i];
+  }
+  i++;
+  for (i; i < arr.length; i++) {
+    date += arr[i];
+  }
+
+  price = Number(price);
+  date = Number(date);
+  const obj = {
+    name: name,
+    price: price,
+    serialNumber: serialNumber,
+    date: date,
+  };
+
+  return obj;
 }
 
 function hashEquality(h1, h2) {
@@ -67,4 +91,4 @@ const perfume = new product("Blue", 23);
 console.log(perfume);
 
 console.log("Extracting Price");
-extractPrice(perfume);
+console.log(extractInfo(perfume));
