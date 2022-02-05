@@ -5,6 +5,7 @@ import { getLedger, getPool, runSimulation } from "./script";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import MakeTransaction from "./Components/MakeTransaction";
+import TransactionHistory from "./Components/TransactionHistory";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function App() {
       <Navbar />
       <Products />
       <MakeTransaction />
+      <TransactionHistory />
     </div>
   );
 }

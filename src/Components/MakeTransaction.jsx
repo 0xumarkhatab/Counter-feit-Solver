@@ -24,7 +24,7 @@ function MakeTransaction() {
       data: "hidden",
     });
 
-    state.Pool[sendId].sendItemViaSerialNumber(sno);
+    state.Pool[sendId].sendItemViaSerialNumber(sno, destId);
     let ledger = getLedger();
 
     console.log(ledger);

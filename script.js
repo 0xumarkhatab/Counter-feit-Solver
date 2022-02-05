@@ -1,3 +1,7 @@
+document.write(
+  "<h1>CounterFeit Problem Solution</h1> <p>using Blockchain Ethics and power of Javascript</p>"
+);
+
 //  Make Secen Nodes
 //__________________Random function ________
 
@@ -9,7 +13,7 @@ function generateRandInt(prec) {
 // Medicines/Shoes/Perfumes are products
 function cypherText(name) {
   let cyphered = "";
-  for (let x of name) {
+  for (x of name) {
     cyphered += x + "$";
   }
   return cyphered;
@@ -109,12 +113,6 @@ class product {
   isEqual(theProduct) {
     return 1;
   }
-  getName() {
-    return this.name;
-  }
-  getSerialNumber() {
-    return this.serialNumber;
-  }
 }
 let TransactionLedger = [];
 
@@ -146,7 +144,6 @@ class person {
 
     this.products = [];
   }
-
   addProduct(prd) {
     if (this.askPermission(this)) {
       this.products.push(prd);
@@ -156,15 +153,8 @@ class person {
       return false;
     }
   }
-
-  addProductViaParameters(name, price) {
-    console.log("product cia parameters is gonna be added");
-    let prd = new product(name, price);
-    this.addProduct(prd);
-  }
-
   printProducts() {
-    for (let x of this.products) {
+    for (x of this.products) {
       console.log(extractInfo(x));
     }
   }
@@ -203,20 +193,15 @@ class person {
     return this.publicKey;
   }
   broadcastTransaction(tran) {
-    console.log("Bradcasting Now");
     for (let i = 0; i < Pool.length; i++) {
       if (Pool[i].acceptTransaction(tran) === true) {
         console.log("\nTransaction Accepted\n");
-        tran.transactionTime = Number(new Date());
-        tran.transactionNumber = Number(generateRandInt(10000000));
-
         //      taking owner ship
         Pool[i].takeOwnerShip(tran);
         // delete from sender and credit to destination here
         this.removeItem(tran.data);
 
         TransactionLedger.push(tran);
-
         viewTransactionHistory();
 
         break;
@@ -245,22 +230,11 @@ class person {
   getItem(index) {
     return this.products[index];
   }
-  getItemViaSerialNumber(sno) {
-    let index = 0;
-    let pr;
-
-    for (let i = 0; i < this.products.length; i++) {
-      const element = this.products[i];
-      if (Number(element.serialNumber) === Number(sno)) {
-        return i;
-      }
-    }
-  }
 
   //attempting to accept transaction
 
   acceptTransaction(tran) {
-    if (Number(tran.destinationKey) === Number(this.publicKey)) {
+    if (tran.destinationKey === this.publicKey) {
       console.log("Eligible to accept Transaction");
       return true;
     }
@@ -276,7 +250,7 @@ class person {
       );
       return false;
     }
-    console.log("dest:= ", dest_key);
+
     let destinationKey = dest_key;
     let sender = this.publicKey;
     let transaction = {
@@ -284,29 +258,23 @@ class person {
       destinationKey,
       sender,
     };
-    console.log("gonna make transaction");
 
     this.broadcastTransaction(transaction);
-
-    viewTransactionHistory();
     return true;
   }
-  sendItemViaSerialNumber(sno, dest_key) {
-    let itemNo = this.getItemViaSerialNumber(sno);
-    console.log("item via sno ", itemNo, "dest", dest_key);
-
-    this.sendItem(itemNo, dest_key);
-  }
 }
+
 let Pool = [];
 
-export function MakePool() {
+function MakePool() {
   for (let i = 0; i <= 7; i++) {
     Pool.push(new person(i));
   }
 }
 
-export function addProductToPerson(prd, prsn) {
+MakePool();
+
+function addProductToPerson(prd, prsn) {
   console.log(
     "\n\t\t_________________________________________\n\nPerson ",
     prsn.getPublicKey(),
@@ -337,37 +305,21 @@ let producNames = [
   "Infinix Smartphone",
 ];
 
-export function instantiateRandomPersons() {
-  for (let i = 0; i < Pool.length; i++) {
-    let p_name = producNames[generateRandInt(10)];
-    let p1 = new product(p_name, generateRandInt(100));
-    addProductToPerson(p1, Pool[i]);
-  }
-}
-export function printPoolProducts() {
-  for (let i = 0; i < Pool.length; i++) {
-    const element = Pool[i];
-    element.printProducts();
-  }
+for (let i = 0; i < Pool.length; i++) {
+  let p_name = producNames[generateRandInt(10)];
+  let p1 = new product(p_name, generateRandInt(100));
+  addProductToPerson(p1, Pool[i]);
 }
 
-export function runSimulation() {
-  MakePool();
+console.log("Printng Products");
 
-  instantiateRandomPersons();
-  console.log("Printing Products");
-
-  printPoolProducts();
-
-  Pool[3].sendItem(0, 6);
-
-  Pool[1].sendItem(-1, 3);
-
-  Pool[0].sendItem(0, 5);
+for (let i = 0; i < Pool.length; i++) {
+  const element = Pool[i];
+  element.printProducts();
 }
-export function getPool() {
-  return Pool;
-}
-export function getLedger() {
-  return TransactionLedger;
-}
+
+Pool[3].sendItem(0, 6);
+
+Pool[1].sendItem(-1, 3);
+
+Pool[0].sendItem(0, 5);
