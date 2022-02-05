@@ -177,23 +177,45 @@ class person {
     for (let i = 0; i < Pool.length; i++) {
       if (Pool[i].acceptTransaction(tran) === true) {
         console.log("\nTransaction Accepted\n");
-
         // delete from sender and credit to destination here
+        Pool[i].takeOwnerShip(tran);
+        this.removeItem(tran.data);
+
         // Add to Transaction Distributed Ledger
+
+        TransactionLedger.push(tran);
 
         break;
       }
     }
   }
+  takeOwnerShip(tran) {
+    this.products.push(tran.data);
+    console.log(
+      "\nAfter Addition of the Item, Person ",
+      this.publicKey,
+      " has Following Items\n"
+    );
 
+    this.printProducts();
+
+    return true;
+  }
   getItem(index) {
     return this.products[index];
   }
+  removeItem(item) {
+    let id = item.serialNumber;
+    this.products = this.products.filter(
+      (theItem) => theItem.serialNumber != id
+    );
+  }
+
   //attempting to accept transaction
 
   acceptTransaction(tran) {
     if (tran.destinationKey === this.publicKey) {
-      console.log("Accepting Transaction");
+      console.log("Eligible to accept Transaction");
       return true;
     }
     return false;
@@ -266,9 +288,4 @@ for (let i = 0; i < Pool.length; i++) {
   element.printProducts();
 }
 
-Pool[0].sendItem(0, 1);
-console.log(
-  "\nAfter person 0 has transferred.... \tNow Person 1 has following products"
-);
-
-Pool[1].printProducts();
+Pool[0].sendItem(0, 5);
