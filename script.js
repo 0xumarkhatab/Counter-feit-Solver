@@ -90,5 +90,6 @@ const perfume = new product("Blue", 23);
 
 console.log(perfume);
 
-console.log("Extracting Price");
+console.log("Extracting Information");
+
 console.log(extractInfo(perfume));
