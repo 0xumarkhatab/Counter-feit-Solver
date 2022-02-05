@@ -51,7 +51,12 @@ function extractInfo(p) {
 }
 
 function hashEquality(h1, h2) {
-  if (h1) {
+  if (extractInfo(h1).date === extractInfo(h2).date) {
+    return 0;
+  } else if (extractInfo(h1).date > extractInfo(h2).date) {
+    return 1;
+  } else if (extractInfo(h1).date < extractInfo(h2).date) {
+    return -1;
   }
 }
 
@@ -91,3 +96,12 @@ const perfume2 = new product("Blue", 23);
 
 console.log(perfume1);
 console.log(perfume2);
+console.log(
+  "\t\tTesting Fungibility\n0 means equal\n1 means first is greater(product is made after)\n-1 means first is lesser(product is made first)\n\n\n"
+);
+
+console.log("Testing Fungibility for same products");
+console.log(hashEquality(perfume1, perfume1));
+
+console.log("Testing Fungibility for different products");
+console.log(hashEquality(perfume1, perfume2));
