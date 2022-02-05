@@ -118,27 +118,6 @@ class product {
 }
 let TransactionLedger = [];
 
-function viewTransactionHistory() {
-  console.log(
-    "\n\t\t_______Transaction History_________\n(Pulling Data From Distributed Transaction Ledger)\n"
-  );
-  for (let i = 0; i < TransactionLedger.length; i++) {
-    const element = TransactionLedger[i];
-    console.log("-------Transaction No: ", element.transactionID, "\n");
-
-    console.log(
-      "Sender : ",
-      element.sender,
-      " \t Destination:",
-      element.destinationKey,
-      " Data : (hidden) ",
-      " Transaction time : ",
-      element.transactionTime
-    );
-  }
-  console.log("\n__________Transaction List Ended________________\n");
-}
-
 class person {
   constructor(id) {
     this.publicKey = id;
@@ -199,17 +178,6 @@ class person {
       if (Pool[i].acceptTransaction(tran) === true) {
         console.log("\nTransaction Accepted\n");
         // delete from sender and credit to destination here
-        Pool[i].takeOwnerShip(tran);
-        this.removeItem(tran.data);
-
-        // Add to Transaction Distributed Ledger
-        tran.transactionID = generateRandInt(100000);
-        tran.transactionTime = Number(new Date());
-
-        TransactionLedger.push(tran);
-
-        viewTransactionHistory();
-
         break;
       }
     }
@@ -247,14 +215,7 @@ class person {
   }
   sendItem(itemNo, dest_key) {
     let data = this.getItem(itemNo);
-    if (data === undefined) {
-      console.log(
-        "\n\t\t-->>>Dangg !!Person ",
-        this.publicKey,
-        " does not have the item to transfer\n"
-      );
-      return false;
-    }
+
     let destinationKey = dest_key;
     let sender = this.publicKey;
     let transaction = {
