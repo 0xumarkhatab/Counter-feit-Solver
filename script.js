@@ -181,6 +181,18 @@ class person {
       }
     }
   }
+  takeOwnerShip(tran) {
+    this.products.push(tran.data);
+    console.log(
+      "\nAfter Addition of the Item, Person ",
+      this.publicKey,
+      " has Following Items\n"
+    );
+
+    this.printProducts();
+
+    return true;
+  }
 
   getItem(index) {
     return this.products[index];
