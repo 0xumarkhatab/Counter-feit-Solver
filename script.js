@@ -118,8 +118,25 @@ console.log(
   "\t\tTesting Fungibility\n0 means equal\n1 means first is greater(first product is made after)\n-1 means first is lesser(first product is made first)\n\n\n"
 );
 
-console.log("Testing Fungibility for same products");
-console.log(hashEquality(perfume1, perfume1));
+class person {
+  constructor(id) {
+    this.id = id;
+    this.products = [];
+  }
 
-console.log("Testing Fungibility for different products");
-console.log(hashEquality(perfume1, perfume2));
+  askPermission() {
+    console.log("Person ", this.id, "asking for permision to add product");
+  }
+  givePermission() {
+    console.log("Person ", this.id, "giving permision to add product");
+  }
+}
+let Pool = [];
+
+function MakePool() {
+  for (let i = 1; i <= 7; i++) {
+    Pool.push(new person(i));
+  }
+}
+MakePool();
+Pool[3].askPermission();
