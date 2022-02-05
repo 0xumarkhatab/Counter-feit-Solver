@@ -121,14 +121,18 @@ console.log(
 class person {
   constructor(id) {
     this.id = id;
-    this.products = [];
   }
-
+  addProduct(prd) {
+    this.products.push(prd);
+  }
   askPermission() {
     console.log("Person ", this.id, "asking for permision to add product");
   }
   givePermission() {
     console.log("Person ", this.id, "giving permision to add product");
+  }
+  getId() {
+    return this.id;
   }
 }
 let Pool = [];
@@ -138,5 +142,10 @@ function MakePool() {
     Pool.push(new person(i));
   }
 }
+
 MakePool();
 Pool[3].askPermission();
+
+function addProductToPerson(prd, prsn) {
+  Pool[prsn.getId()].addProduct(prd);
+}
